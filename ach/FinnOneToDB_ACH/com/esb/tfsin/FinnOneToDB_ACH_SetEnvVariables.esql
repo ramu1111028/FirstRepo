@@ -1,0 +1,150 @@
+/*
+ *
+ * File name: FinnOneToHSBC_PDC_SetEnvVariables.esql
+ *
+ * Purpose:   To set the environment variables and prepare csv file.
+ *
+ * Authors:   PRONTEFF
+ *               
+ * Date      NOVEMBER 2019
+ * Version:  1.0
+ *
+ *
+ */
+
+BROKER SCHEMA com.esb.tfsin
+
+DECLARE EMAIL_DISTRIBUTION_LIST EXTERNAL CHARACTER '';
+DECLARE SOURCE_SYSTEM EXTERNAL CHARACTER '';
+DECLARE DESTINATION_SYSTEM EXTERNAL CHARACTER '';
+
+/* */
+--DECLARE SAP_LOCATION EXTERNAL CHARACTER '';
+DECLARE ACH_FILENAME_PREFIX EXTERNAL CHARACTER '';
+DECLARE FINNONESTGTABLE EXTERNAL CHARACTER '';      --  Table has to confirm 
+/* */ 
+
+
+CREATE COMPUTE MODULE FinnOneToDB_ACH_SetEnvVariables
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+
+			SET Environment.CommonData.Source 		= SOURCE_SYSTEM;
+			DECLARE EnvCRef REFERENCE TO  Environment.CommonData;
+			SET EnvCRef.Destination 				= DESTINATION_SYSTEM;
+			SET EnvCRef.EmailToAddress 				= EMAIL_DISTRIBUTION_LIST;
+			SET EnvCRef.FileName 					= 'DB_ACH';
+		
+		/* */
+			DECLARE selectQuery CHARACTER '';
+		
+			SET selectQuery = 'SELECT DESTINATIONSORTCODE,BENEFICIARYBANKACCOUNTNUMBER,BENEFICIARYACCOUNTHOLDERNAME,SPONSORBANKMICR,USERNUMBER,USERNAME,AGREEMENTNO,AMOUNT,PRODUCTTYPE,UMRNNO,CHEQUESNO,CHEQUEDATE,PRESENTATIONDATE,BOUNCE_DATE,REALIZATIONDATE,SERIALNO,BRANCH,REGION,DEPOSIT_BANK FROM '||FINNONESTGTABLE||' WHERE CLIENT_CODE = ''ACHTFS'' AND PROCESSED_FLAG = ''N''';
+		
+			SET Environment.Result.Data 			= PASSTHRU (selectQuery);
+		
+			SET Environment.noOfRecords 			= CAST(CARDINALITY(Environment.Result.Data[]) AS CHARACTER);
+			DECLARE fileName CHARACTER '';
+			DECLARE time_stamp CHARACTER CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'yyyy:MM:ddHH:mm:ss');
+			SET time_stamp 							= REPLACE(time_stamp,':','');
+			SET fileName 							= ACH_FILENAME_PREFIX || time_stamp ||'.csv';
+		
+		/* */
+		    SET Environment.AuditRecord.UniqueID 	= fileName;
+		 	DECLARE auditRef REFERENCE TO Environment.AuditRecord;
+		 	SET auditRef.ApplicationName 			= ApplicationLabel||'  '||MessageFlowLabel;
+		 	SET auditRef.Filename 					= fileName;
+		 	SET auditRef.Source 					= SOURCE_SYSTEM;
+		 	SET auditRef.Destination 				= DESTINATION_SYSTEM;
+		/* */		 	
+		
+		IF EXISTS(Environment.Result.Data[]) THEN
+						
+			SET auditRef.FileStatusMessage 			= 'Records picked from Source system'; 
+			SET auditRef.ProcessedFlag 				= 'P';
+			
+			PROPAGATE TO TERMINAL 'out1';
+		
+		ELSE	
+			
+			SET auditRef.FileStatusMessage 			= 'No records found for DeutscheBank ACH'; 
+			SET auditRef.ProcessedFlag 				= 'N';
+			
+			PROPAGATE TO TERMINAL 'out1';
+			
+			SET OutputRoot.EmailOutputHeader.Subject = 'No records found for DeutscheBank ACH file from FinnOne';
+			DECLARE emailBody CHARACTER;
+			SET emailBody 							= 'No records found in FinnOne Staging DB for creating ACH file from FinnOne to DeutscheBank'; 
+			SET OutputRoot.BLOB.BLOB 				= CAST(emailBody AS BLOB CCSID 1208);
+			
+			PROPAGATE TO TERMINAL 'out2';
+			
+			RETURN FALSE;
+			
+		END IF;
+	    /* */	
+--			SET OutputRoot.EmailOutputHeader.Subject = 'ACH file from FinnOne to DeutscheBank Started';
+--			DECLARE emailBody CHARACTER;
+--			SET emailBody 							= Environment.CommonData.FileName||' with '||Environment.noOfRecords||' records Started to DeutscheBank';
+--			SET OutputRoot.BLOB.BLOB 				= CAST(emailBody AS BLOB CCSID 1208);		
+----			PROPAGATE TO TERMINAL 'out4';
+--			PROPAGATE TO TERMINAL 'out2';
+	    /* */
+				
+			DECLARE envRef REFERENCE TO Environment.Result.Data[1];
+		
+ 			CREATE FIELD OutputRoot.DFDL.ACH.record;
+ 			DECLARE ach REFERENCE TO OutputRoot.DFDL.ACH.record;
+ 
+ 			SET ach.UserNumber  					= 'DEUT00053000014487';
+			SET ach.UserName                		= 'TOYOTAFINSERINDLTD';
+			SET ach.UserReference		 			= 'ACH';
+			SET ach.SponsorBankMICR 				= '400200002';
+			SET ach.SettlementDate 					= '2-Aug-18';
+		
+			DECLARE i INTEGER 1;
+				
+		WHILE LASTMOVE(envRef) DO
+		/* */ 			
+			CREATE FIELD OutputRoot.DFDL.ACH_Data.record[i];
+			DECLARE recRef REFERENCE TO OutputRoot.DFDL.ACH_Data.record[i];
+			SET recRef.DestinationSortCode 			= envRef.DESTINATIONSORTCODE;
+      		SET recRef.BeneficiaryBankAccountNumber = envRef.BENEFICIARYBANKACCOUNTNUMBER;
+			SET recRef.BeneficiaryAccountHolderName = envRef.BENEFICIARYACCOUNTHOLDERNAME;
+			SET recRef.SponsorBankMICR 				= COALESCE(envRef.SPONSORBANKMICR,'400200002');
+			SET recRef.UserNumber 					= COALESCE(envRef.USERNUMBER,'DEUT00053000014487');
+			SET recRef.UserName 					= COALESCE(envRef.USERNAME,'TOYOTAFINSERINDLTD');
+			SET recRef.TransactionReference 		= envRef.AGREEMENTNO;
+			SET recRef.Amount 						= envRef.AMOUNT;
+			SET recRef.ProductType 					= COALESCE(envRef.PRODUCTTYPE,'10');
+      		SET recRef.UMRN 						= COALESCE(envRef.UMRNNO,'');
+			SET recRef.Chequeno 					= envRef.CHEQUESNO;
+			SET recRef.ChequeDate 					= COALESCE(envRef.CHEQUEDATE,'');
+			SET recRef.PresentationDate 			= COALESCE(envRef.PRESENTATIONDATE,'');
+			SET recRef.BounceDate 					= COALESCE(envRef.BOUNCE_DATE,'');
+			SET recRef.RealizationDate 				= COALESCE(envRef.REALIZATIONDATE,'');
+			SET recRef.SerialNo 					= envRef.SERIALNO;
+			SET recRef.Branch 						= COALESCE(envRef.BRANCH,'');
+			SET recRef.Region 						= COALESCE(envRef.REGION,'');
+			SET recRef.DepositBank 					= COALESCE(envRef.DEPOSIT_BANK,'DB- CMS CHEQUE');
+
+
+		/* */ 
+				
+			MOVE envRef NEXTSIBLING;
+			SET i = i+1;
+			
+		END WHILE;
+
+			SET OutputLocalEnvironment.Destination.File.Name = fileName;
+		
+			PROPAGATE TO TERMINAL 'out3' DELETE NONE;
+		
+			SET OutputLocalEnvironment.Destination.File.Directory = 'D:\HSBC\ACH\Out';		/*SAP location for MIS*/
+
+ 			SET OutputRoot.BLOB.BLOB = ASBITSTREAM(OutputRoot.DFDL CCSID 1208);	
+	
+	
+		RETURN TRUE;
+	END;
+END MODULE;

@@ -1,0 +1,72 @@
+/*
+ *
+ * File name: FinnOneToHSBC_PDC_BuildTimeoutRequest.esql
+ *
+ * Purpose:   To build the timeout request.
+ *
+ * Authors:   PRONTEFF
+ *               
+ * Date       OCTOBER 2019
+ * Version:  1.0
+ *
+ *
+ */
+
+BROKER SCHEMA com.esb.tfsin
+
+DECLARE CM_START_TIME EXTERNAL CHARACTER '';
+DECLARE CM_INTERVAL EXTERNAL CHARACTER '';
+DECLARE CM_COUNT EXTERNAL CHARACTER '';
+
+DECLARE cmRetryCount SHARED INTEGER 0;
+
+CREATE COMPUTE MODULE FinnOneToDB_ACH_BuildTimeOutRequest
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+			--setting the common data in environment
+		
+		SET Environment.CommonData.Source = SOURCE_SYSTEM;
+		DECLARE EnvCRef REFERENCE TO  Environment.CommonData;
+		SET EnvCRef.Destination = DESTINATION_SYSTEM;
+		SET EnvCRef.EmailToAddress = EMAIL_DISTRIBUTION_LIST;
+		SET EnvCRef.FileName = 'DB_ACH';     ----has to confirm 
+	
+		DECLARE startAtTimeStr CHAR;
+		
+		SET startAtTimeStr = CM_START_TIME;  -- 20:15:00
+		
+		IF EXISTS(InputExceptionList.*[]) THEN
+						
+			IF cmRetryCount < 3 THEN
+				SET cmRetryCount = cmRetryCount + 1;	
+			ELSE
+				SET cmRetryCount = 0;
+				SET OutputExceptionList = InputExceptionList;
+				PROPAGATE TO TERMINAL 'out1';
+				RETURN FALSE;
+			END IF;
+		
+			DECLARE StartDelyIntervalStr CHARACTER '00:01:00';		-- set based on the retry interval requirement
+			DECLARE startAtTime TIME CURRENT_TIME 
+        	 + CAST(StartDelyIntervalStr AS INTERVAL HOUR TO SECOND);
+			SET startAtTimeStr = startAtTime;
+			SET startAtTimeStr = SUBSTRING(startAtTimeStr FROM 7 FOR  8);
+		
+		END IF;
+		
+		SET OutputLocalEnvironment.TimeoutRequest.Action = 'SET';
+		SET OutputLocalEnvironment.TimeoutRequest.Identifier = 'Controlled';
+		SET OutputLocalEnvironment.TimeoutRequest.StartDate = 'TODAY';		--CURRENT_DATE
+		
+		SET OutputLocalEnvironment.TimeoutRequest.StartTime = startAtTimeStr;
+		
+		--Set Count to 1 and Interval to 0 for processing of Message only once a day
+		SET OutputLocalEnvironment.TimeoutRequest.Interval = CAST(CM_INTERVAL AS INTEGER);		-- 0
+		SET OutputLocalEnvironment.TimeoutRequest.Count = CAST(CM_COUNT as INTEGER);		--1
+		SET OutputLocalEnvironment.TimeoutRequest.IgnoreMissed = FALSE;
+		
+		RETURN TRUE;
+	END;
+END MODULE;

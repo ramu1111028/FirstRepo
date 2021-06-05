@@ -1,0 +1,49 @@
+/*
+ *
+ * File name: HSBC_PDC_UpdateSTGDB.esql
+ *
+ * Purpose:   To update the records with ProcessedFlag from ‘N’ to 'Y' indicating records processed to DeutscheBank.
+ *
+ * Authors:   PRONTEFF
+ *               
+ * Date      NOVEMBER 2019
+ * Version:  1.0
+ *
+ *
+ */
+
+BROKER SCHEMA com.esb.tfsin
+
+
+CREATE COMPUTE MODULE FinnOneToDB_ACH_UpdateSTGDB
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+DECLARE updateQuery CHARACTER '';
+		
+		SET updateQuery = 'UPDATE '||FINNONESTGTABLE||' SET PROCESSED_FLAG = ''Y'' WHERE CLIENT_CODE = ''ACHTFS'' AND PROCESSED_FLAG = ''N''';
+		
+		PASSTHRU (updateQuery);
+		
+		SET Environment.AuditRecord.UniqueID 	= Environment.CommonData.FileName;
+		DECLARE auditRef REFERENCE TO Environment.AuditRecord;
+		SET auditRef.ApplicationName 			= ApplicationLabel||'  '||MessageFlowLabel;
+		SET auditRef.Filename 					= Environment.CommonData.FileName;
+		SET auditRef.Source 					= SOURCE_SYSTEM;
+		SET auditRef.Destination 				= DESTINATION_SYSTEM;
+		SET auditRef.FileStatusMessage 			= 'File sent to destination system';  --TODO 
+		SET auditRef.ProcessedFlag 				= 'Y';
+		
+		PROPAGATE TO TERMINAL 'out';
+		
+		SET OutputRoot.EmailOutputHeader.Subject = 'ACH file processed from FinnOne to DeutscheBank successfully';
+		DECLARE emailBody CHARACTER;
+		SET emailBody 							= Environment.CommonData.FileName||' with '||Environment.noOfRecords||' records Processed to DeutscheBank'; 
+		SET OutputRoot.BLOB.BLOB 				= CAST(emailBody AS BLOB CCSID 1208);		
+		
+		PROPAGATE TO TERMINAL 'out1';
+		
+		RETURN FALSE;
+
+	END;
+END MODULE;

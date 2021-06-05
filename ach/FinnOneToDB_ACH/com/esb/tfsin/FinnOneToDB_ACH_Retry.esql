@@ -1,0 +1,32 @@
+BROKER SCHEMA com.esb.tfsin
+
+
+CREATE COMPUTE MODULE FinnOneToDB_ACH_Retry
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		DECLARE retryCount INTEGER;
+		IF EXISTS(Environment.retryCount[]) THEN
+			SET retryCount =Environment.retryCount;
+			SET Environment.retryCount =retryCount+1;
+			
+			IF(Environment.retryCount > 3)  THEN
+			 
+			PROPAGATE TO TERMINAL 'out2';
+			
+			ELSE
+			SET OutputRoot = InputRoot;
+			PROPAGATE TO TERMINAL 'out1';			
+			END IF;
+	
+		ELSE
+			SET Environment.retryCount = 1;
+			SET OutputRoot = InputRoot;
+			PROPAGATE TO TERMINAL 'out1';
+			
+		END IF;
+		
+		RETURN FALSE;
+	END;
+END MODULE;

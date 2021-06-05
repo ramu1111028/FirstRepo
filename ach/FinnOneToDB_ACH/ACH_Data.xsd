@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:csv="http://www.ibm.com/dfdl/CommaSeparatedFormat" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+
+
+    <xsd:import namespace="http://www.ibm.com/dfdl/CommaSeparatedFormat" schemaLocation="IBMdefined/CommaSeparatedFormat.xsd"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format documentFinalTerminatorCanBeMissing="yes" encoding="{$dfdl:encoding}" escapeSchemeRef="csv:CSVEscapeScheme" ref="csv:CommaSeparatedFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element ibmSchExtn:docRoot="true" name="ACH_Data">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="">
+				<xsd:element dfdl:terminator="%CR;%LF;%WSP*;" name="header">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element default="DestinationSortCode" ibmDfdlExtn:sampleValue="head_value1" name="DestinationSortCode" type="xsd:string"/>
+							<xsd:element default="BeneficiaryBankAccountNumber" ibmDfdlExtn:sampleValue="head_value2" name="BeneficiaryBankAccountNumber" type="xsd:string"/>							
+							<xsd:element default="BeneficiaryAccountHolderName" ibmDfdlExtn:sampleValue="head_value3" name="BeneficiaryAccountHolderName" type="xsd:string"/>							
+                            <xsd:element default="SponsorBankMICR" ibmDfdlExtn:sampleValue="head_value4" name="SponsorBankMICR" type="xsd:string"/>
+                            <xsd:element default="UserNumber" ibmDfdlExtn:sampleValue="head_value5" name="UserNumber" type="xsd:string"/>
+                            <xsd:element default="UserName" ibmDfdlExtn:sampleValue="head_value6" name="UserName" type="xsd:string"/>
+                            <xsd:element default="TransactionReference" ibmDfdlExtn:sampleValue="head_value7" name="TransactionReference" type="xsd:string"/>
+                            <xsd:element default="Amount" ibmDfdlExtn:sampleValue="head_value8" name="Amount" type="xsd:string"/>
+                            <xsd:element default="ProductType" ibmDfdlExtn:sampleValue="head_value9" name="ProductType" type="xsd:string"/>
+                            <xsd:element default="UMRN" ibmDfdlExtn:sampleValue="head_value10" name="UMRN" type="xsd:string"/>
+                            <xsd:element default="Chequeno" ibmDfdlExtn:sampleValue="head_value11" name="Chequeno" type="xsd:string"/>
+                            <xsd:element default="ChequeDate" ibmDfdlExtn:sampleValue="head_value12" name="ChequeDate" type="xsd:string"/>
+                            <xsd:element default="PresentationDate" ibmDfdlExtn:sampleValue="head_value13" name="PresentationDate" type="xsd:string"/>
+                            <xsd:element default="BounceDate" ibmDfdlExtn:sampleValue="head_value14" name="BounceDate" type="xsd:string"/>
+                            <xsd:element default="RealizationDate" ibmDfdlExtn:sampleValue="head_value15" name="RealizationDate" type="xsd:string"/>
+                            <xsd:element default="SerialNo" ibmDfdlExtn:sampleValue="head_value16" name="SerialNo" type="xsd:string"/>
+                            <xsd:element default="Branch" ibmDfdlExtn:sampleValue="head_value17" name="Branch" type="xsd:string"/>
+                            <xsd:element default="Region" ibmDfdlExtn:sampleValue="head_value18" name="Region" type="xsd:string"/>
+                            <xsd:element default="DepositBank" ibmDfdlExtn:sampleValue="head_value19" name="DepositBank" type="xsd:string"/>
+                                                    </xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>			
+				<xsd:element dfdl:occursCountKind="implicit" dfdl:terminator="%CR;%LF;%WSP*;" maxOccurs="unbounded" name="record">
+					<xsd:complexType>
+						<xsd:sequence> 
+							<xsd:element ibmDfdlExtn:sampleValue="value1" name="DestinationSortCode" type="xsd:string"/>
+							<xsd:element ibmDfdlExtn:sampleValue="value2" name="BeneficiaryBankAccountNumber" type="xsd:string"/>
+							<xsd:element ibmDfdlExtn:sampleValue="value3" name="BeneficiaryAccountHolderName" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value4" minOccurs="0" name="SponsorBankMICR" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value5" minOccurs="0" name="UserNumber" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value6" minOccurs="0" name="UserName" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value7" name="TransactionReference" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value8" name="Amount" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value9" name="ProductType" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value10" name="UMRN" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value11" name="Chequeno" type="xsd:string"/>
+                            <xsd:element dfdl:calendarPattern="dd-MM-yyyy" dfdl:calendarPatternKind="explicit" name="ChequeDate" type="xsd:date"/>
+                            <xsd:element dfdl:calendarPattern="dd-MM-yyyy" dfdl:calendarPatternKind="explicit" name="PresentationDate" type="xsd:date"/>
+                            <xsd:element dfdl:calendarPattern="dd-MM-yyyy" dfdl:calendarPatternKind="explicit" minOccurs="0" name="BounceDate" type="xsd:string"/>
+                            <xsd:element dfdl:calendarPattern="dd-MM-yyyy" dfdl:calendarPatternKind="explicit" minOccurs="0" name="RealizationDate" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value16" name="SerialNo" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value17" name="Branch" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value18" name="Region" type="xsd:string"/>
+                            <xsd:element ibmDfdlExtn:sampleValue="value19" name="DepositBank" type="xsd:string"/>
+                                                    </xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+
+</xsd:schema>

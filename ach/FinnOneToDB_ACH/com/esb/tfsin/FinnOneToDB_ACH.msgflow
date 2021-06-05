@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmEmailOutput.msgnode="ComIbmEmailOutput.msgnode" xmlns:ComIbmFileOutput.msgnode="ComIbmFileOutput.msgnode" xmlns:ComIbmTimeoutControl.msgnode="ComIbmTimeoutControl.msgnode" xmlns:ComIbmTimeoutNotification.msgnode="ComIbmTimeoutNotification.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:tfsin_common_EncDec_Encryption.subflow="tfsin/common/EncDec/Encryption.subflow"
+    xmlns:tfsin_common_util_AuditLogging.subflow="tfsin/common/util/AuditLogging.subflow" xmlns:tfsin_common_util_ExceptionHandler.subflow="tfsin/common/util/ExceptionHandler.subflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/esb/tfsin/FinnOneToDB_ACH.msgflow" nsPrefix="com_esb_tfsin_FinnOneToDB_ACH.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CM_START_TIME" name="CM_START_TIME" defaultValueLiteral="13:16:00">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CM_INTERVAL" name="CM_INTERVAL" defaultValueLiteral="0">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CM_COUNT" name="CM_COUNT" defaultValueLiteral="1">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ACH_FILENAME_PREFIX" name="ACH_FILENAME_PREFIX" defaultValueLiteral="DB_ACH">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.FINNONESTGTABLE" name="FINNONESTGTABLE" defaultValueLiteral="PCR_STAGE.PCR_PRESENTATION_DATA">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EMAIL_DISTRIBUTION_LIST" name="EMAIL_DISTRIBUTION_LIST" defaultValueLiteral="TFSINACESupport@pronteff.com,p.rajeswari@tfsin.co.in">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.SOURCE_SYSTEM" name="SOURCE_SYSTEM" defaultValueLiteral="FinnOne">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.DESTINATION_SYSTEM" name="DESTINATION_SYSTEM" defaultValueLiteral="DeutscheBank">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.EMAIL_FROM_ADDRESS" name="EMAIL_FROM_ADDRESS" defaultValueLiteral="AppConnectdevuatAlert@tfsin.co.in">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.dataSource" name="dataSource" defaultValueLiteral="APPCONDEV">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.publicKeyFile" name="publicKeyFile" defaultValueLiteral="D:\07Feb2019_Toyota_BankwiseKeys\HSBC\HSBC\hsbc_obd_pgp_pub.key">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.signPassphrase" name="signPassphrase" defaultValueLiteral="hsbcbank1234">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.signPrivateKeyFile" name="signPrivateKeyFile" defaultValueLiteral="D:\07Feb2019_Toyota_BankwiseKeys\HSBC\TOYOTA\hsbc1_private.asc">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.signPublicKeyFile" name="signPublicKeyFile" defaultValueLiteral="D:\07Feb2019_Toyota_BankwiseKeys\HSBC\TOYOTA\hsbc1_public.asc">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.toAddresses" name="toAddresses" defaultValueLiteral="TFSINACESupport@pronteff.com,raviraj.nandi@tfsin.co.in,p.rajeswari@tfsin.co.in">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.fromAddress" name="fromAddress" defaultValueLiteral="AppConnectdevuatAlert@tfsin.co.in">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="FinnOneToDB_ACH" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/FinnOneToDB_ACH/icons/full/obj16/FinnOneToDB_ACH.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/FinnOneToDB_ACH/icons/full/obj30/FinnOneToDB_ACH.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmTimeoutNotification.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="170,119" uniqueIdentifier="ACAutomated" timeoutInterval="86400">
+        <translation xmi:type="utility:ConstantString" string="AC_Automated_Timer"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTimeoutNotification.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="168,255" uniqueIdentifier="ACControlled" operationMode="controlled">
+        <translation xmi:type="utility:ConstantString" string="AC_Controlled_Timer"/>
+      </nodes>
+      <nodes xmi:type="ComIbmTimeoutControl.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="549,120" uniqueIdentifier="ACControlled">
+        <translation xmi:type="utility:ConstantString" string="Timeout Control"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="383,119" computeExpression="esql://routine/com.esb.tfsin#FinnOneToDB_ACH_BuildTimeOutRequest.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="BuildTimeOutRequest"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="381,255" computeExpression="esql://routine/com.esb.tfsin#FinnOneToDB_ACH_SetEnvVariables.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="SetEnvVariables"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="912,260" computeExpression="esql://routine/com.esb.tfsin#FinnOneToDB_ACH_UpdateSTGDB.Main">
+        <translation xmi:type="utility:ConstantString" string="UpdateSTGDBandSendEmail"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="747,75" rotation="RIGHT_TO_LEFT" computeExpression="esql://routine/com.esb.tfsin#FinnOneToDB_ACH_Retry.Main">
+        <translation xmi:type="utility:ConstantString" string="Retry"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="448,384" outputDirectory="D:\HSBC\ACH\OrgFileBackup" outputFilename="*" outputMode="archiveAndReplaceWithTimestamp" failedFileAction="moveToFailureWithTimestamp">
+        <translation xmi:type="utility:ConstantString" string="File Output"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="736,260" outputDirectory="D:\HSBC\ACH\Out" outputFilename="*">
+        <translation xmi:type="utility:ConstantString" string="File Output1"/>
+      </nodes>
+      <nodes xmi:type="ComIbmEmailOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="1014,442" smtpServer="10.10.1.22" securityIdentity="smtpsecobjuat">
+        <translation xmi:type="utility:ConstantString" string="Email Output"/>
+      </nodes>
+      <nodes xmi:type="tfsin_common_util_AuditLogging.subflow:FCMComposite_1" xmi:id="FCMComposite_1_11" location="1012,62">
+        <translation xmi:type="utility:ConstantString" string="AuditLogging"/>
+      </nodes>
+      <nodes xmi:type="tfsin_common_util_ExceptionHandler.subflow:FCMComposite_1" xmi:id="FCMComposite_1_12" location="442,18">
+        <translation xmi:type="utility:ConstantString" string="ExceptionHandler"/>
+      </nodes>
+      <nodes xmi:type="tfsin_common_EncDec_Encryption.subflow:FCMComposite_1" xmi:id="FCMComposite_1_13" location="567,256">
+        <translation xmi:type="utility:ConstantString" string="Encryption"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out3" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_18" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_19" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_20" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_14" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.CM_START_TIME">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.CM_START_TIME" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.CM_INTERVAL">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.CM_INTERVAL" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.CM_COUNT">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.CM_COUNT" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+            <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.ACH_FILENAME_PREFIX">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.ACH_FILENAME_PREFIX" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+              <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.FINNONESTGTABLE">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.FINNONESTGTABLE" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+                <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.EMAIL_DISTRIBUTION_LIST">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.EMAIL_DISTRIBUTION_LIST" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+                  <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.SOURCE_SYSTEM">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.SOURCE_SYSTEM" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+                    <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.DESTINATION_SYSTEM">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.DESTINATION_SYSTEM" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+                      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.EMAIL_FROM_ADDRESS">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.EMAIL_FROM_ADDRESS" bundleName="com/esb/tfsin/FinnOneToDB_ACH" pluginId="FinnOneToDB_ACH"/>
+                        <propertyDescriptor groupName="Group.Basic" configurable="true" describedAttribute="Property.dataSource">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.dataSource" bundleName="ComIbmCompute" pluginId="com.ibm.etools.mft.ibmnodes.definitions"/>
+                          <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.publicKeyFile">
+                            <propertyName xmi:type="utility:TranslatableString" key="Property.publicKeyFile" bundleName="tfsin/common/EncDec/Encryption" pluginId="EncryptDecrptCommonLibrary"/>
+                            <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.signPassphrase">
+                              <propertyName xmi:type="utility:TranslatableString" key="Property.signPassphrase" bundleName="tfsin/common/EncDec/Encryption" pluginId="EncryptDecrptCommonLibrary"/>
+                              <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.signPrivateKeyFile">
+                                <propertyName xmi:type="utility:TranslatableString" key="Property.signPrivateKeyFile" bundleName="tfsin/common/EncDec/Encryption" pluginId="EncryptDecrptCommonLibrary"/>
+                                <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.signPublicKeyFile">
+                                  <propertyName xmi:type="utility:TranslatableString" key="Property.signPublicKeyFile" bundleName="tfsin/common/EncDec/Encryption" pluginId="EncryptDecrptCommonLibrary"/>
+                                  <propertyDescriptor groupName="Group.Basic" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.EmailOutputCharacterSearch" describedAttribute="Property.toAddresses">
+                                    <propertyName xmi:type="utility:TranslatableString" key="Property.toAddresses" bundleName="ComIbmEmailOutput" pluginId="com.ibm.etools.mft.ibmnodes.definitions"/>
+                                    <propertyDescriptor groupName="Group.Basic" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.EmailOutputCharacterSearch" describedAttribute="Property.fromAddress">
+                                      <propertyName xmi:type="utility:TranslatableString" key="Property.fromAddress" bundleName="ComIbmEmailOutput" pluginId="com.ibm.etools.mft.ibmnodes.definitions"/>
+                                    </propertyDescriptor>
+                                  </propertyDescriptor>
+                                </propertyDescriptor>
+                              </propertyDescriptor>
+                            </propertyDescriptor>
+                          </propertyDescriptor>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.dataSource" overriddenNodes="FCMComposite_1_5 FCMComposite_1_6">
+      <overriddenAttribute href="ComIbmCompute.msgnode#Property.dataSource"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.publicKeyFile" overriddenNodes="FCMComposite_1_13">
+      <overriddenAttribute href="tfsin/common/EncDec/Encryption.subflow#Property.publicKeyFile"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.signPassphrase" overriddenNodes="FCMComposite_1_13">
+      <overriddenAttribute href="tfsin/common/EncDec/Encryption.subflow#Property.signPassphrase"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.signPrivateKeyFile" overriddenNodes="FCMComposite_1_13">
+      <overriddenAttribute href="tfsin/common/EncDec/Encryption.subflow#Property.signPrivateKeyFile"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.signPublicKeyFile" overriddenNodes="FCMComposite_1_13">
+      <overriddenAttribute href="tfsin/common/EncDec/Encryption.subflow#Property.signPublicKeyFile"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.toAddresses" overriddenNodes="FCMComposite_1_10">
+      <overriddenAttribute href="ComIbmEmailOutput.msgnode#Property.toAddresses"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.fromAddress" overriddenNodes="FCMComposite_1_10">
+      <overriddenAttribute href="ComIbmEmailOutput.msgnode#Property.fromAddress"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>
